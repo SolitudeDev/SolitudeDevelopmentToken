@@ -5,20 +5,23 @@ pragma solidity ^0.8.0;
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "openzeppelin-solidity/contracts/utils/Context.sol";
 
 contract SDVToken is Context, IERC20, IERC20Metadata {
+    
     mapping(address => uint256) private _balances;
-
     mapping(address => mapping(address => uint256)) private _allowances;
 
-    uint256 private _totalSupply;
+    uint256 private initialSupply_ = 10000000000000000000000000;
+    uint256 private _totalSupply = initialSupply_;
 
     string private _name;
     string private _symbol;
 
     
-    constructor(string memory name_, string memory symbol_) {
+    constructor(string memory name_, string memory symbol_, address owner) {
+        _mint(owner, initialSupply_);
         _name = name_;
         _symbol = symbol_;
     }
